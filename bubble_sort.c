@@ -9,12 +9,12 @@
 #include <stdlib.h>
 
 
-int *bubble_sort(int *,int, int *);
+int *bubble_sort(int *,int);
 void print_array(int *,int);
 
 int main()
 {
-  int *arr,i,size,*sarr, *pass;
+  int *arr,i,size, *pass;
   int p_var =1;
   pass = &p_var;
   setbuf(stdout,NULL);
@@ -30,9 +30,9 @@ int main()
   printf("\n************ RESULT ************\n");
   printf("Given Array:\n");
   print_array(arr,size);
-  sarr = bubble_sort(arr, size, pass);
-  printf("\nSelection Sorted Array:\n");
-  print_array(sarr,size);
+  bubble_sort(arr,size);
+  printf("\nBubble Sorted Array:\n");
+  print_array(arr,size);
   printf("\nNumber of passes made to sort the array:%d",*pass);
   printf("\n********************************\n");
   printf("\n------------------------------------------------\n");
@@ -40,29 +40,26 @@ int main()
   return 0;
 }
 
-int * bubble_sort(int * arr, int size, int * pass)
+int * bubble_sort(int * arr, int size)
 {
-  int i,temp,j,flag;
-  while(1)
+  int i,j,flag,temp;
+  for(i = 0; i < size - 1; i++)
   {
-    j = 1;
     flag = 0;
-    for(i = 0; i < size && j < size; i++)
+    for(j = 0; j < size - 1 - i; j++)
     {
-      if(arr[j] < arr[i])
+      if(arr[j+1] < arr[j])
       {
-        temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
-        flag = 1;
+        temp = arr[j];
+        arr[j] = arr[j+1];
+        arr[j+1] = temp;
+        flag++;
       }
-      j++;
     }
     if(flag == 0)
     {
       break;
     }
-    (*pass)++;
   }
   return arr;
 }

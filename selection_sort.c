@@ -8,12 +8,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int * selection_sort(int *,int, int);
+int * selection_sort(int *,int);
 void print_array(int *,int);
 
 int main()
 {
-  int size,i,flag = 0;
+  int size,i;
   int *arr;
   int *sarr;
   setbuf(stdout, NULL);
@@ -29,7 +29,7 @@ int main()
   printf("\n************ RESULT ************\n");
   printf("Given Array:\n");
   print_array(arr,size);
-  sarr = selection_sort(arr,size,flag);
+  sarr = selection_sort(arr,size);
   printf("\nSelection Sorted Array:\n");
   print_array(sarr,size);
   printf("\n********************************\n");
@@ -38,24 +38,25 @@ int main()
   return 0;
 }
 
-int *selection_sort(int *arr,int size, int flag)
+int *selection_sort(int *arr,int size)
 {
-  int temp,i,j,cur_ind,min;
-  for(i = 0; i<size; i++)
+  int temp,i,j,min;
+  for(i = 0; i < size - 1; i++)
   {
-    cur_ind = i+1;
-    min = arr[i];
-    temp = i;
-    for(j = cur_ind; j < size;j++)
+    min = i;
+    for(j = i+1; j < size;j++)
     {
-      if(arr[j] < min)
+      if(arr[j] < arr[min])
       {
-        temp = j;
-        min = arr[j];
+        min = j;
       }
     }
-    arr[temp] = arr[i];
-    arr[i] = min;
+    if(i != min)
+    {
+      temp = arr[i];
+      arr[i] = arr[min];
+      arr[min] = temp;
+    }
   }
   return arr;
 }
