@@ -42,14 +42,11 @@ int *insertion_sort(int * arr, int size)
   for(i = 1; i < size; i++)
   {
     temp = arr[i];
-    for(j = i - 1; j >= 0; j--)
+    for(j = i - 1; j >= 0 && temp < arr[j]; j--)
     {
-      if(temp < arr[j])
-      {
-        arr[j+1] = arr[j];
-        arr[j] = temp;
-      }
+      arr[j+1] = arr[j];
     }
+    arr[j+1] = temp;
   }
   return arr;
 }
