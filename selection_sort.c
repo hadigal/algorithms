@@ -7,7 +7,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
+struct timeval st, sp;
 int * selection_sort(int *,int);
 void print_array(int *,int);
 
@@ -41,6 +43,7 @@ int main()
 int *selection_sort(int *arr,int size)
 {
   int temp,i,j,min;
+  gettimeofday(&st,NULL);
   for(i = 0; i < size - 1; i++)
   {
     min = i;
@@ -58,6 +61,10 @@ int *selection_sort(int *arr,int size)
       arr[min] = temp;
     }
   }
+  gettimeofday(&sp,NULL);
+  printf("\n*****************************\n");
+  printf("Sorting time:%lf usec\n",(double)(sp.tv_usec - st.tv_usec));
+  printf("\n*****************************\n");
   return arr;
 }
 

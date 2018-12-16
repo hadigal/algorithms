@@ -7,6 +7,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/time.h>
+
+struct timeval st,sp;
 
 int *insertion_sort(int *, int);
 void print_array(int *, int);
@@ -28,7 +31,7 @@ int main()
   printf("Given Array:\n");
   print_array(arr,size);
   sarr = insertion_sort(arr,size);
-  printf("\nSelection Sorted Array:\n");
+  printf("\nInsertion Sorted Array:\n");
   print_array(sarr,size);
   printf("\n********************************\n");
   printf("\n------------------------------------------------\n");
@@ -39,6 +42,7 @@ int main()
 int *insertion_sort(int * arr, int size)
 {
   int i,j,temp;
+  gettimeofday(&st,NULL);
   for(i = 1; i < size; i++)
   {
     temp = arr[i];
@@ -48,6 +52,10 @@ int *insertion_sort(int * arr, int size)
     }
     arr[j+1] = temp;
   }
+  gettimeofday(&sp,NULL);
+  printf("\n*****************************\n");
+  printf("\nSorting time:%lf usec\n",(double)(sp.tv_usec - st.tv_usec));
+  printf("\n*****************************\n");
   return arr;
 }
 

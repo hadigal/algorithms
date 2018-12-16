@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <sys/time.h>
 
 typedef unsigned int uint32;
 static int *arr;
@@ -52,8 +52,12 @@ int main(void)
   {
     scanf("%d",arr+itr);
   }
+  struct timeval start, stop;
+  gettimeofday(&start,NULL);
   quickSort(arr,0,size-1);
+  gettimeofday(&stop,NULL);
   printf("\n-------------------------- Sorted Array --------------------------\n");
+  printf("\nSorting time:%lf usec\n\n",(double)(stop.tv_usec - start.tv_usec));
   for(uint32 itr = 0; itr < size; ++itr)
   {
     printf("%d\n",arr[itr]);

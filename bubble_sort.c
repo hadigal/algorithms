@@ -7,10 +7,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <sys/time.h>
 
 int *bubble_sort(int *,int);
 void print_array(int *,int);
+struct timeval st,sp;
 
 int main()
 {
@@ -42,6 +43,7 @@ int main()
 
 int * bubble_sort(int * arr, int size)
 {
+  gettimeofday(&st,NULL);
   int i,j,flag,temp;
   for(i = 0; i < size - 1; i++)
   {
@@ -61,6 +63,10 @@ int * bubble_sort(int * arr, int size)
       break;
     }
   }
+  gettimeofday(&sp,NULL);
+  printf("\n*****************************\n");
+  printf("Sorting time:%lf usec\n",(double)(sp.tv_usec - st.tv_usec));
+  printf("\n*****************************\n");
   return arr;
 }
 
