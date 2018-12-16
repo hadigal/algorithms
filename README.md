@@ -1,4 +1,4 @@
-##**Algorithms in C:**
+##**Algorithms in C:**##
 
 - selection sort ---> Sorting time:21.000000 usec
 - bubble sort ---> Sorting time:56.000000 usec
