@@ -1,67 +1,59 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/time.h>
 
-typedef unsigned int uint32;
-static int *arr;
+int *arr;
 
-void quickSort(int *arr,int left,int rt)
+void swap(int *aptr1,int *aptr2)
 {
-  if(left >= rt)
-  {
-    return;
-  }
-  int l = left;
-  int r = rt;
-  int pIdx = (uint32)((rt + left)/2);
+  int temp = *aptr1;
+  *aptr1 = *aptr2;
+  *aptr2 = temp;
+}
 
-  while(left <= rt)
+int part(int *arr, int low, int high)
+{
+  int piv = high;
+  int itr1 = low - 1; //selecting the smallest val
+  for(int itr2 = low; itr2 <= high -1; ++itr2)
   {
-    while(arr[left] < arr[pIdx])
+    if(arr[itr2] <= arr[piv])
     {
-      ++left;
-    }
-    while(arr[rt] > arr[pIdx])
-    {
-      --rt;
-    }
-    if((arr[left] >= arr[rt]) && (left <= rt))
-    {
-      int temp = arr[left];
-      arr[left] = arr[rt];
-      arr[rt] = temp;
-      ++left;
-      --rt;
+      ++itr1;
+      swap(arr+itr2,arr+itr1);
     }
   }
-  quickSort(arr,l,left-1);
-  quickSort(arr,left,r);
+  ++itr1;
+  swap(arr+itr1,arr+high);
+  return itr1;
+}
+
+void quickSort(int *arr, int low, int high)
+{
+  int piv;
+  if(low < high)
+  {
+    piv = part(arr,low,high);
+    quickSort(arr,low,piv-1);//before; as last pivot idx was brought to its appropriate place
+    quickSort(arr,piv+1,high);//after; right side pivot
+  }
 }
 
 int main(void)
 {
-  int size;
-  scanf("%u",&size);
-  if( size <= 0)
-  {
-    printf("Invalid size\n");
-    return EXIT_FAILURE;
-  }
-  arr = (int *)calloc(size,sizeof(*arr));
-  for(uint32 itr = 0; itr < size; ++itr)
+  int len;
+  scanf("%d",&len);
+  arr = (int *)calloc(len,sizeof(*arr));
+  printf("ENter arr elements\n");
+  for(int itr = 0; itr < len; ++itr)
   {
     scanf("%d",arr+itr);
   }
-  struct timeval start, stop;
-  gettimeofday(&start,NULL);
-  quickSort(arr,0,size-1);
-  gettimeofday(&stop,NULL);
-  printf("\n-------------------------- Sorted Array --------------------------\n");
-  printf("\nSorting time:%lf usec\n\n",(double)(stop.tv_usec - start.tv_usec));
-  for(uint32 itr = 0; itr < size; ++itr)
+  quickSort(arr,0,len-1);
+
+  //display
+  for(int itr = 0; itr < len; ++itr)
   {
-    printf("%d\n",arr[itr]);
+    printf("arr[%d]:%d\n",itr,*(arr+itr));
   }
-  free(arr);
   return EXIT_SUCCESS;
 }
